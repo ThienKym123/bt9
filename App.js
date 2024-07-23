@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './screens/HomeScreen';
@@ -19,51 +19,58 @@ const App = () => {
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
+          tabBarIcon: ({ focused }) => {
             let iconName;
 
             if (route.name === 'Home') {
-              iconName = focused ? HomeIcon : HomeIcon;
+              iconName = HomeIcon;
             } else if (route.name === 'Order') {
-              iconName = focused ? OrderIcon : OrderIcon;
+              iconName = OrderIcon;
             } else if (route.name === 'Inbox') {
-              iconName = focused ? InboxIcon : InboxIcon;
+              iconName = InboxIcon;
             } else if (route.name === 'Profile') {
-              iconName = focused ? ProfileIcon : ProfileIcon;
+              iconName = ProfileIcon;
             }
 
-            return <Image source={iconName} style={{ width: 29, height: 36 }} />;
+            return <Image source={iconName} style={styles.icon} />;
           },
           tabBarActiveTintColor: '#5D3EBD',
           tabBarInactiveTintColor: 'gray',
-          tabBarStyle: {
-            // Căn chỉnh Bottom Tab
-            position: 'absolute', // Căn chỉnh tuyệt đối
-            bottom: 0, // Vị trí ở dưới cùng
-            left: 0, // Vị trí ở bên trái
-            right: 0, // Vị trí ở bên phải
-            width: 375, // Chiều rộng chiếm toàn bộ màn hình
-            height: 60, // Chiều cao của Bottom Tab
-            backgroundColor: '#FFFFFF', // Màu nền
-            borderTopWidth: 1, // Độ dày của viền trên
-            borderTopColor: '#E0E0E0', // Màu viền trên
-            paddingHorizontal: 20, // Khoảng cách giữa icon và cạnh trái/phải
-          },
-          tabBarItemStyle: {
-            // Căn chỉnh mỗi item trong Bottom Tab
-            flex: 1, // Chiều rộng của mỗi item
-            alignItems: 'center', // Căn chỉnh icon và text theo chiều dọc
-          },
-          tabBarLabel: () => null, // Ẩn tiêu đề của tab
+          tabBarStyle: styles.tabBar,
+          tabBarItemStyle: styles.tabBarItem,
+          tabBarLabel: () => null, // Hide tab labels
         })}
       >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Order" component={OrderScreen} />
-        <Tab.Screen name="Inbox" component={InboxScreen} />
-        <Tab.Screen name="Profile" component={ProfileScreen} />
+        <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
+        <Tab.Screen name="Order" component={OrderScreen} options={{ headerShown: false }}/>
+        <Tab.Screen name="Inbox" component={InboxScreen} options={{ headerShown: false }}/>
+        <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }}/>
       </Tab.Navigator>
     </NavigationContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  icon: {
+    width: 29,
+    height: 36,
+  },
+  tabBar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    width: 375,
+    height: 60,
+    backgroundColor: '#FFFFFF',
+    borderTopWidth: 1,
+    borderTopColor: '#E0E0E0',
+    paddingHorizontal: 20,
+  },
+  tabBarItem: {
+    flex: 1,
+    alignItems: 'center',
+  },
+});
 
 export default App;
